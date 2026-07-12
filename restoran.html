@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rasa Nusantara - Menu dan Pesanan</title>
+  <link rel="stylesheet" href="restoran.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero" aria-label="Rasa Nusantara">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <nav class="topbar" aria-label="Navigasi utama">
+        <strong>Rasa Nusantara</strong>
+        <div>
+          <a href="#menu">Menu</a>
+          <a href="#riwayat">Riwayat</a>
+        </div>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-content">
+          <p class="eyebrow">Masakan Indonesia</p>
+          <h1>RESTORAN NUSANTARA.</h1>
+          <p>Nikmati makanan, minuman, dan paket lengkap.</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#menu">Lihat Menu</a>
+            <span class="status-pill">Buka 10.00 - 22.00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content" id="menu">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Daftar Menu</p>
+          <h2>Pilih Hidangan Favorit</h2>
+        </div>
+        <label class="search-box">
+          <span>Cari menu</span>
+          <input id="searchInput" type="search" placeholder="Contoh: rendang, soto, es">
+        </label>
+      </div>
+
+      <div class="category-tabs" aria-label="Kategori menu">
+        <button class="tab is-active" data-category="semua" type="button">Semua</button>
+        <button class="tab" data-category="makanan" type="button">Makanan</button>
+        <button class="tab" data-category="minuman" type="button">Minuman</button>
+        <button class="tab" data-category="paket" type="button">Paket Lengkap</button>
+      </div>
+
+      <div class="layout">
+        <section class="menu-grid" id="menuGrid" aria-label="Menu restoran"></section>
+
+        <aside class="order-panel" id="pesanan" aria-label="Keranjang pesanan">
+          <div class="order-header">
+            <div>
+              <p class="eyebrow">Pesanan</p>
+              <h2>Keranjang</h2>
+            </div>
+            <button id="clearOrderBtn" class="ghost-button" type="button">Reset</button>
+          </div>
+
+          <div id="orderList" class="order-list"></div>
+
+          <div class="payment-block">
+            <div class="panel-subtitle">Metode pembayaran</div>
+            <div class="payment-options" role="tablist" aria-label="Metode pembayaran">
+              <button class="payment-option is-active" type="button" data-payment="cash">Cash</button>
+              <button class="payment-option" type="button" data-payment="qris">QRIS</button>
+              <button class="payment-option" type="button" data-payment="debit">Kartu Debit</button>
+            </div>
+            <p class="payment-note">Metode yang dipilih akan tersimpan bersama order.</p>
+          </div>
+
+          <div class="order-total">
+            <span>Total</span>
+            <strong id="totalPrice">Rp0</strong>
+          </div>
+          <button class="checkout-button" id="checkoutBtn" type="button">Buat Pesanan</button>
+          <p class="order-note">Harga belum termasuk pajak dan layanan.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="history-section" id="riwayat" aria-label="Riwayat tersimpan">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Riwayat</p>
+          <h2>Order Tersimpan</h2>
+        </div>
+        <p class="section-note">Data yang tampil di sini diambil dari server lokal setelah order disimpan.</p>
+      </div>
+
+      <section class="history-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-subtitle">Pesanan Tersimpan</p>
+            <h3>Saved Orders</h3>
+          </div>
+          <span class="count-pill" id="orderCount">0</span>
+        </div>
+        <div id="orderHistory" class="history-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <template id="menuCardTemplate">
+    <article class="menu-card">
+      <div class="dish-visual">
+        <img class="dish-photo" src="" alt="">
+        <span class="dish-fallback"></span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-top">
+          <div>
+            <span class="menu-origin"></span>
+            <h3 class="menu-name"></h3>
+          </div>
+          <strong class="menu-price"></strong>
+        </div>
+        <p class="menu-description"></p>
+        <div class="menu-card-bottom">
+          <span class="spice-level"></span>
+          <button class="add-button" type="button">Tambah</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    const rupiah = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0
+    });
+
+    const paymentLabels = {
+      cash: "Cash",
+      qris: "QRIS",
+      debit: "Kartu Debit"
+    };
+
+    const defaultMenus = [
+      {
+        id: "rendang",
+        name: "Rendang Daging",
+        origin: "Sumatera Barat",
+        category: "makanan",
+        price: 42000,
+        spice: "Pedas gurih",
+        icon: "rendang",
+        image: "assets/restoran/rendang-daging.jpg",
+        description: "Daging sapi empuk dimasak perlahan dengan santan, cabai, dan rempah Minang."
+      },
+      {
+        id: "sate",
+        name: "Sate Ayam Madura",
+        origin: "Madura",
+        category: "makanan",
+        price: 32000,
+        spice: "Manis pedas",
+        icon: "sate",
+        image: "assets/restoran/sate-ayam-madura.webp",
+        description: "Sate ayam bakar arang dengan bumbu kacang, kecap, lontong, dan acar."
+      },
+      {
+        id: "rawon",
+        name: "Rawon Surabaya",
+        origin: "Jawa Timur",
+        category: "makanan",
+        price: 38000,
+        spice: "Hangat rempah",
+        icon: "soup",
+        image: "assets/restoran/rawon-surabaya.jpg",
+        description: "Sup daging kuah kluwek berwarna hitam dengan tauge pendek dan telur asin."
+      },
+      {
+        id: "gudeg",
+        name: "Gudeg Jogja",
+        origin: "Yogyakarta",
+        category: "makanan",
+        price: 35000,
+        spice: "Manis legit",
+        icon: "rice",
+        image: "assets/restoran/gudeg-jogja.jpg",
+        description: "Nangka muda, ayam opor, telur pindang, krecek, dan nasi hangat."
+      },
+      {
+        id: "soto",
+        name: "Soto Betawi",
+        origin: "Jakarta",
+        category: "makanan",
+        price: 40000,
+        spice: "Gurih santan",
+        icon: "soup",
+        image: "assets/restoran/soto-betawi.jpg",
+        description: "Kuah santan susu dengan daging sapi, kentang, tomat, dan emping."
+      },
+      {
+        id: "nasi-liwet",
+        name: "Nasi Liwet Solo",
+        origin: "Jawa Tengah",
+        category: "makanan",
+        price: 34000,
+        spice: "Gurih lembut",
+        icon: "rice",
+        image: "assets/restoran/nasi-liwet-solo.jpg",
+        description: "Nasi gurih, suwiran ayam, sayur labu, telur, dan areh santan."
+      },
+      {
+        id: "ayam-taliwang",
+        name: "Ayam Taliwang",
+        origin: "Lombok",
+        category: "makanan",
+        price: 45000,
+        spice: "Pedas kuat",
+        icon: "chicken",
+        image: "assets/restoran/ayam-taliwang.jpg",
+        description: "Ayam bakar bumbu cabai Lombok dengan plecing kangkung dan nasi putih."
+      },
+      {
+        id: "pempek",
+        name: "Pempek Kapal Selam",
+        origin: "Palembang",
+        category: "makanan",
+        price: 30000,
+        spice: "Asam pedas",
+        icon: "snack",
+        image: "assets/restoran/pempek-kapal-selam.jpg",
+        description: "Pempek isi telur dengan kuah cuko, timun, dan mi kuning."
+      },
+      {
+        id: "cendol",
+        name: "Es Cendol Dawet",
+        origin: "Jawa",
+        category: "minuman",
+        price: 18000,
+        spice: "Segar manis",
+        icon: "drink",
+        image: "assets/restoran/es-cendol-dawet.jpg",
+        description: "Cendol pandan, santan, gula aren cair, dan es serut."
+      },
+      {
+        id: "wedang",
+        name: "Wedang Jahe",
+        origin: "Nusantara",
+        category: "minuman",
+        price: 16000,
+        spice: "Hangat",
+        icon: "tea",
+        image: "assets/restoran/wedang-jahe.jpg",
+        description: "Minuman jahe, serai, gula batu, dan kayu manis."
+      },
+      {
+        id: "beras-kencur",
+        name: "Es Beras Kencur",
+        origin: "Jawa",
+        category: "minuman",
+        price: 17000,
+        spice: "Herbal segar",
+        icon: "drink",
+        image: "assets/restoran/beras-kencur.jpeg",
+        description: "Jamu beras kencur dingin dengan rasa manis, wangi, dan menyegarkan."
+      },
+      {
+        id: "paket-nusantara",
+        name: "Paket Lengkap Nusantara",
+        origin: "Pilihan chef",
+        category: "paket",
+        price: 72000,
+        spice: "Komplet",
+        icon: "package",
+        image: "assets/restoran/paket-lengkap-nusantara.jpeg",
+        description: "Rendang mini, sate ayam, nasi liwet, sambal, lalapan, dan es cendol."
+      }
+    ];
+
+    const menuGrid = document.querySelector("#menuGrid");
+    const orderList = document.querySelector("#orderList");
+    const totalPrice = document.querySelector("#totalPrice");
+    const template = document.querySelector("#menuCardTemplate");
+    const searchInput = document.querySelector("#searchInput");
+    const checkoutBtn = document.querySelector("#checkoutBtn");
+    const clearOrderBtn = document.querySelector("#clearOrderBtn");
+    const orderHistory = document.querySelector("#orderHistory");
+    const orderCount = document.querySelector("#orderCount");
+    const paymentButtons = document.querySelectorAll(".payment-option");
+    const apiBase = location.protocol === "file:" ? "http://127.0.0.1:8001" : "";
+
+    function apiUrl(path) {
+      return `${apiBase}${path}`;
+    }
+
+    let activeCategory = "semua";
+    let menus = [...defaultMenus];
+    let order = JSON.parse(localStorage.getItem("restoranOrder") || "{}");
+    let selectedPayment = localStorage.getItem("restoranPaymentMethod") || "cash";
+    let recentOrders = [];
+
+    function getIcon(type) {
+      const icons = {
+        rendang: "R",
+        sate: "S",
+        soup: "K",
+        rice: "N",
+        chicken: "A",
+        snack: "P",
+        drink: "E",
+        tea: "J",
+        package: "P"
+      };
+      return icons[type] || "M";
+    }
+
+    function setPaymentMethod(method) {
+      selectedPayment = method;
+      localStorage.setItem("restoranPaymentMethod", method);
+      paymentButtons.forEach(button => button.classList.toggle("is-active", button.dataset.payment === method));
+    }
+
+    function renderMenu() {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = menus.filter(menu => {
+        const matchCategory = activeCategory === "semua" || menu.category === activeCategory;
+        const matchQuery = [menu.name, menu.origin, menu.description].join(" ").toLowerCase().includes(query);
+        return matchCategory && matchQuery;
+      });
+
+      menuGrid.innerHTML = "";
+      filtered.forEach(menu => {
+        const card = template.content.cloneNode(true);
+        card.querySelector(".menu-card").dataset.category = menu.category;
+        const photo = card.querySelector(".dish-photo");
+        photo.alt = `Foto ${menu.name}`;
+        photo.loading = "lazy";
+        photo.decoding = "async";
+        photo.addEventListener("error", () => {
+          photo.classList.add("is-hidden");
+        });
+        photo.src = menu.image;
+        card.querySelector(".dish-fallback").textContent = getIcon(menu.icon);
+        card.querySelector(".menu-origin").textContent = menu.origin;
+        card.querySelector(".menu-name").textContent = menu.name;
+        card.querySelector(".menu-price").textContent = rupiah.format(menu.price);
+        card.querySelector(".menu-description").textContent = menu.description;
+        card.querySelector(".spice-level").textContent = menu.spice;
+        card.querySelector(".add-button").addEventListener("click", () => addToOrder(menu.id));
+        menuGrid.appendChild(card);
+      });
+
+      if (!filtered.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Menu tidak ditemukan.";
+        menuGrid.appendChild(empty);
+      }
+    }
+
+    function addToOrder(id) {
+      order[id] = (order[id] || 0) + 1;
+      saveOrder();
+      renderOrder();
+    }
+
+    function changeQty(id, amount) {
+      order[id] = (order[id] || 0) + amount;
+      if (order[id] <= 0) delete order[id];
+      saveOrder();
+      renderOrder();
+    }
+
+    function saveOrder() {
+      localStorage.setItem("restoranOrder", JSON.stringify(order));
+    }
+
+    function asArray(value) {
+      if (Array.isArray(value)) return value;
+      if (value && Array.isArray(value.value)) return value.value;
+      if (value && typeof value === "object" && Array.isArray(value.items)) return value.items;
+      return [];
+    }
+
+    async function loadMenusFromDatabase() {
+      try {
+        const response = await fetch(apiUrl("/api/menus"));
+        if (!response.ok) throw new Error("API menu tidak tersedia");
+        const data = await response.json();
+        if (Array.isArray(data.menus) && data.menus.length) {
+          menus = data.menus;
+        }
+      } catch (error) {
+        menus = [...defaultMenus];
+      }
+      renderMenu();
+      renderOrder();
+    }
+
+    function buildOrderPayload() {
+      return Object.entries(order).map(([id, quantity]) => ({ id, quantity }));
+    }
+
+    async function saveOrderToDatabase() {
+      const items = buildOrderPayload();
+      if (!items.length) {
+        checkoutBtn.textContent = "Pilih Menu Dulu";
+        window.setTimeout(() => checkoutBtn.textContent = "Buat Pesanan", 1400);
+        return;
+      }
+
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = "Menyimpan...";
+
+      try {
+        const response = await fetch(apiUrl("/api/orders"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items, payment_method: selectedPayment })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Pesanan gagal disimpan");
+
+        order = {};
+        saveOrder();
+        renderOrder();
+        await loadRecentOrders();
+        checkoutBtn.textContent = `Tersimpan #${data.order.id}`;
+      } catch (error) {
+        console.error("Gagal menyimpan pesanan:", error);
+        checkoutBtn.textContent = "Server Belum Aktif";
+      } finally {
+        checkoutBtn.disabled = false;
+        window.setTimeout(() => checkoutBtn.textContent = "Buat Pesanan", 1700);
+      }
+    }
+
+    function renderOrder() {
+      const items = Object.entries(order)
+        .map(([id, qty]) => ({ ...menus.find(menu => menu.id === id), qty }))
+        .filter(item => item.id);
+
+      orderList.innerHTML = "";
+      if (!items.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-order";
+        empty.textContent = "Belum ada menu dipilih.";
+        orderList.appendChild(empty);
+      }
+
+      let total = 0;
+      items.forEach(item => {
+        total += item.price * item.qty;
+        const row = document.createElement("article");
+        row.className = "order-item";
+
+        const details = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = item.name;
+        const price = document.createElement("span");
+        price.textContent = `${rupiah.format(item.price)} x ${item.qty}`;
+        details.append(title, price);
+
+        const control = document.createElement("div");
+        control.className = "qty-control";
+        const minus = document.createElement("button");
+        minus.type = "button";
+        minus.setAttribute("aria-label", `Kurangi ${item.name}`);
+        minus.textContent = "-";
+        const qty = document.createElement("span");
+        qty.textContent = item.qty;
+        const plus = document.createElement("button");
+        plus.type = "button";
+        plus.setAttribute("aria-label", `Tambah ${item.name}`);
+        plus.textContent = "+";
+        minus.addEventListener("click", () => changeQty(item.id, -1));
+        plus.addEventListener("click", () => changeQty(item.id, 1));
+        control.append(minus, qty, plus);
+
+        row.append(details, control);
+        orderList.appendChild(row);
+      });
+
+      totalPrice.textContent = rupiah.format(total);
+    }
+
+    function renderOrderHistory() {
+      orderHistory.innerHTML = "";
+      orderCount.textContent = recentOrders.length.toString();
+
+      if (!recentOrders.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Belum ada pesanan tersimpan.";
+        orderHistory.appendChild(empty);
+        return;
+      }
+
+      recentOrders.forEach(orderItem => {
+        const article = document.createElement("article");
+        article.className = "history-item";
+
+        const head = document.createElement("div");
+        head.className = "history-item-head";
+
+        const titleBlock = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = `Order #${orderItem.id}`;
+        const meta = document.createElement("span");
+        const payment = paymentLabels[orderItem.payment_method] || "Cash";
+        meta.textContent = `${orderItem.created_at || "-"} · ${payment}`;
+        titleBlock.append(title, meta);
+
+        const total = document.createElement("span");
+        total.className = "history-total";
+        total.textContent = rupiah.format(orderItem.total || 0);
+        head.append(titleBlock, total);
+
+        const body = document.createElement("div");
+        body.className = "history-item-body";
+        const list = document.createElement("ul");
+        list.className = "history-lines";
+        (orderItem.items || []).forEach(item => {
+          const line = document.createElement("li");
+          line.textContent = `${item.menu_name} x ${item.quantity} · ${rupiah.format(item.subtotal)}`;
+          list.appendChild(line);
+        });
+        body.appendChild(list);
+
+        article.append(head, body);
+        orderHistory.appendChild(article);
+      });
+    }
+
+    async function loadRecentOrders() {
+      try {
+        const response = await fetch(apiUrl("/api/orders"));
+        if (!response.ok) throw new Error("Gagal memuat pesanan");
+        const data = await response.json();
+        recentOrders = asArray(data.orders);
+      } catch (error) {
+        recentOrders = [];
+      }
+      renderOrderHistory();
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => item.classList.remove("is-active"));
+        tab.classList.add("is-active");
+        activeCategory = tab.dataset.category;
+        renderMenu();
+      });
+    });
+
+    paymentButtons.forEach(button => {
+      button.addEventListener("click", () => setPaymentMethod(button.dataset.payment));
+    });
+
+    searchInput.addEventListener("input", renderMenu);
+    clearOrderBtn.addEventListener("click", () => {
+      order = {};
+      saveOrder();
+      renderOrder();
+    });
+    checkoutBtn.addEventListener("click", saveOrderToDatabase);
+    setPaymentMethod(selectedPayment);
+
+    loadMenusFromDatabase();
+    loadRecentOrders();
+  </script>
+</body>
+</html>

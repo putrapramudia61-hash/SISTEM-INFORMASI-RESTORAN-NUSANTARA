@@ -1,0 +1,409 @@
+﻿[
+    {
+        "created_at":  "2026-07-02 10:51:55",
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ],
+        "id":  1,
+        "total":  32000
+    },
+    {
+        "created_at":  "2026-07-02 10:52:01",
+        "items":  [
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ],
+        "id":  2,
+        "total":  35000
+    },
+    {
+        "created_at":  "2026-07-02 14:07:45",
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ],
+        "id":  3,
+        "total":  67000
+    },
+    {
+        "created_at":  "2026-07-02 14:08:39",
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ],
+        "id":  4,
+        "total":  67000
+    },
+    {
+        "created_at":  "2026-07-02 14:09:17",
+        "items":  [
+                      {
+                          "price":  42000,
+                          "menu_name":  "Rendang Daging",
+                          "subtotal":  42000,
+                          "quantity":  1,
+                          "menu_id":  "rendang"
+                      }
+                  ],
+        "id":  5,
+        "total":  42000
+    },
+    {
+        "created_at":  "2026-07-02 14:17:31",
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ],
+        "id":  6,
+        "total":  32000
+    },
+    {
+        "id":  7,
+        "payment_method":  "qris",
+        "created_at":  "2026-07-02 14:52:15",
+        "total":  67000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ]
+    },
+    {
+        "id":  8,
+        "payment_method":  "qris",
+        "created_at":  "2026-07-02 14:54:18",
+        "total":  32000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ]
+    },
+    {
+        "id":  9,
+        "payment_method":  "qris",
+        "created_at":  "2026-07-02 15:07:38",
+        "total":  32000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ]
+    },
+    {
+        "id":  10,
+        "payment_method":  "qris",
+        "created_at":  "2026-07-02 15:30:32",
+        "total":  32000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ]
+    },
+    {
+        "id":  11,
+        "payment_method":  "cash",
+        "created_at":  "2026-07-02 15:48:05",
+        "total":  50000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      },
+                      {
+                          "price":  18000,
+                          "menu_name":  "Es Cendol Dawet",
+                          "subtotal":  18000,
+                          "quantity":  1,
+                          "menu_id":  "cendol"
+                      }
+                  ]
+    },
+    {
+        "id":  12,
+        "payment_method":  "qris",
+        "created_at":  "2026-07-02 16:07:49",
+        "total":  65000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  30000,
+                          "menu_name":  "Pempek Kapal Selam",
+                          "subtotal":  30000,
+                          "quantity":  1,
+                          "menu_id":  "pempek"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ]
+    },
+    {
+        "id":  13,
+        "payment_method":  "cash",
+        "created_at":  "2026-07-02 16:18:09",
+        "total":  64000,
+        "booking_id":  null,
+        "items":  [
+                      {
+                          "price":  30000,
+                          "menu_name":  "Pempek Kapal Selam",
+                          "subtotal":  30000,
+                          "quantity":  1,
+                          "menu_id":  "pempek"
+                      },
+                      {
+                          "price":  34000,
+                          "menu_name":  "Nasi Liwet Solo",
+                          "subtotal":  34000,
+                          "quantity":  1,
+                          "menu_id":  "nasi-liwet"
+                      }
+                  ]
+    },
+    {
+        "created_at":  "2026-07-08 13:11:55",
+        "items":  [
+                      {
+                          "price":  16000,
+                          "menu_name":  "Wedang Jahe",
+                          "subtotal":  16000,
+                          "quantity":  1,
+                          "menu_id":  "wedang"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      },
+                      {
+                          "price":  42000,
+                          "menu_name":  "Rendang Daging",
+                          "subtotal":  42000,
+                          "quantity":  1,
+                          "menu_id":  "rendang"
+                      },
+                      {
+                          "price":  18000,
+                          "menu_name":  "Es Cendol Dawet",
+                          "subtotal":  18000,
+                          "quantity":  1,
+                          "menu_id":  "cendol"
+                      },
+                      {
+                          "price":  72000,
+                          "menu_name":  "Paket Lengkap Nusantara",
+                          "subtotal":  72000,
+                          "quantity":  1,
+                          "menu_id":  "paket-nusantara"
+                      }
+                  ],
+        "id":  14,
+        "total":  183000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-08 13:12:09",
+        "items":  [
+                      {
+                          "price":  30000,
+                          "menu_name":  "Pempek Kapal Selam",
+                          "subtotal":  30000,
+                          "quantity":  1,
+                          "menu_id":  "pempek"
+                      }
+                  ],
+        "id":  15,
+        "total":  30000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-08 13:17:16",
+        "items":  [
+                      {
+                          "price":  30000,
+                          "menu_name":  "Pempek Kapal Selam",
+                          "subtotal":  30000,
+                          "quantity":  1,
+                          "menu_id":  "pempek"
+                      }
+                  ],
+        "id":  16,
+        "total":  30000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-08 15:33:27",
+        "items":  [
+                      {
+                          "price":  42000,
+                          "menu_name":  "Rendang Daging",
+                          "subtotal":  42000,
+                          "quantity":  1,
+                          "menu_id":  "rendang"
+                      }
+                  ],
+        "id":  17,
+        "total":  42000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-08 15:40:45",
+        "items":  [
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ],
+        "id":  18,
+        "total":  35000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-08 23:45:20",
+        "items":  [
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      },
+                      {
+                          "price":  35000,
+                          "menu_name":  "Gudeg Jogja",
+                          "subtotal":  35000,
+                          "quantity":  1,
+                          "menu_id":  "gudeg"
+                      }
+                  ],
+        "id":  19,
+        "total":  67000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-12 18:16:22",
+        "items":  [
+                      {
+                          "price":  42000,
+                          "menu_name":  "Rendang Daging",
+                          "subtotal":  42000,
+                          "quantity":  1,
+                          "menu_id":  "rendang"
+                      },
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ],
+        "id":  20,
+        "total":  74000,
+        "payment_method":  "qris"
+    },
+    {
+        "created_at":  "2026-07-12 18:17:05",
+        "items":  [
+                      {
+                          "price":  42000,
+                          "menu_name":  "Rendang Daging",
+                          "subtotal":  42000,
+                          "quantity":  1,
+                          "menu_id":  "rendang"
+                      },
+                      {
+                          "price":  32000,
+                          "menu_name":  "Sate Ayam Madura",
+                          "subtotal":  32000,
+                          "quantity":  1,
+                          "menu_id":  "sate"
+                      }
+                  ],
+        "id":  21,
+        "total":  74000,
+        "payment_method":  "qris"
+    }
+]
